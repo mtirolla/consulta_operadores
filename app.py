@@ -3,11 +3,8 @@ import pandas as pd
 import requests
 from io import StringIO
 
-# ID da planilha e nome da aba
 SHEET_ID = "1M6QdiL5_yxzaFyg37cPcq71oH8p1i2dponkqtbyoCgg"
 SHEET_NAME = "Página1"
-
-# URL de exportação como CSV
 url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&sheet={SHEET_NAME}"
 
 @st.cache_data
@@ -15,7 +12,10 @@ def carregar_dados():
     response = requests.get(url)
     response.encoding = 'utf-8'
     csv_data = StringIO(response.text)
-    return pd.read_csv(csv_data)
+    df = pd.read_csv(csv_data)
+    df.columns = df.columns.str.strip()
+    df.columns = df.columns.str.replace('\ufeff', '')  # Remove BOM invisível
+    return df
 
 df = carregar_dados()
 
