@@ -19,7 +19,7 @@ def carregar_dados():
     return df
 
 # 🧭 Interface do app
-st.title("🔍 Autorização conforme ONTHEJOB")
+st.title("🔍 Autorização - ONTHEJOB")
 
 numero = st.text_input("Digite o número pessoal (N.P.):")
 
