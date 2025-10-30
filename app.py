@@ -24,9 +24,13 @@ st.title("🔍 Consulta de Operadores")
 numero = st.text_input("Digite o número pessoal (N.P.):")
 
 if numero:
-    resultado = df[df["N.P."].astype(str) == numero]
-    if not resultado.empty:
-        st.success("Operador encontrado:")
-        st.dataframe(resultado)
+    # Verifica se a coluna "N.P." existe e busca o número
+    if "N.P." in df.columns:
+        resultado = df[df["N.P."].astype(str) == numero]
+        if not resultado.empty:
+            st.success("Operador encontrado:")
+            st.dataframe(resultado)
+        else:
+            st.warning("Nenhum operador encontrado com esse número.")
     else:
-        st.warning("Nenhum operador encontrado com esse número.")
+        st.error("A coluna 'N.P.' não foi encontrada na planilha.")
