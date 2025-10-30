@@ -8,8 +8,8 @@ SHEET_ID = "1M6QdiL5_yxzaFyg37cPcq71oH8p1i2dponkqtbyoCgg"
 SHEET_NAME = "Página1"
 url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&sheet={SHEET_NAME}"
 
-# 📥 Função para carregar os dados da planilha
-@st.cache_data
+# 📥 Função para carregar os dados da planilha com atualização automática a cada 5 minutos
+@st.cache_data(ttl=300)  # TTL = 300 segundos = 5 minutos
 def carregar_dados():
     response = requests.get(url)
     response.encoding = 'utf-8'
