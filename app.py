@@ -19,9 +19,6 @@ def carregar_dados():
 
 df = carregar_dados()
 
-st.write("🔍 Colunas detectadas:")
-st.write(df.columns.tolist())
-
 st.title("🔍 Consulta de Operadores")
 
 numero = st.text_input("Digite o número pessoal (N.P.):")
