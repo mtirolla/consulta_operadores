@@ -21,10 +21,10 @@ df = carregar_dados()
 
 st.title("🔍 Consulta de Operadores")
 
-numero = st.text_input("Digite o número pessoal:")
+numero = st.text_input("Digite o número pessoal (N.P.):")
 
 if numero:
-    resultado = df[df["Número Pessoal"].astype(str) == numero]
+    resultado = df[df["N.P."].astype(str) == numero]
     if not resultado.empty:
         st.success("Operador encontrado:")
         st.dataframe(resultado)
