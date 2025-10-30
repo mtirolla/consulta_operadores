@@ -19,8 +19,7 @@ def carregar_dados():
     return df
 
 # 🧭 Interface do app
-st.set_page_config(page_title="Consulta de Operadores", layout="centered")
-st.markdown("<h2 style='text-align: center;'>🔍 Consulta de Operadores</h2>", unsafe_allow_html=True)
+st.title("🔍 Consulta de Operadores")
 
 numero = st.text_input("Digite o número pessoal (N.P.):")
 
@@ -32,16 +31,15 @@ if numero:
         numero_int = int(numero)
         resultado = df[df["N.P."] == numero_int]
         if not resultado.empty:
+            st.success("Operador encontrado:")
             for _, row in resultado.iterrows():
                 st.markdown(f"""
-                <div style="background-color:#f9f9f9; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
-                    <p><strong>🆔 N.P.:</strong> {row['N.P.']}</p>
-                    <p><strong>👤 Nome:</strong> {row['Nome']}</p>
-                    <p><strong>📅 Data de admissão:</strong> {row['Data de admissão']}</p>
-                    <p><strong>🛠️ Máquinas autorizadas:</strong> {row['Máquinas autorizadas']}</p>
-                    <p><strong>👥 Subgrupo de empregados:</strong> {row['Subgrupo de empregados']}</p>
-                </div>
-                """, unsafe_allow_html=True)
+                **🆔 N.P.:** {row['N.P.']}  
+                **👤 Nome:** {row['Nome']}  
+                **📅 Data de admissão:** {row['Data de admissão']}  
+                **🛠️ Máquinas autorizadas:** {row['Máquinas autorizadas']}  
+                **👥 Subgrupo de empregados:** {row['Subgrupo de empregados']}
+                """)
         else:
             st.warning("Nenhum operador encontrado com esse número.")
     except ValueError:
