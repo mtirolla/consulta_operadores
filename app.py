@@ -9,6 +9,7 @@ SHEET_NAME = "Página1"
 url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&sheet={SHEET_NAME}"
 
 # 📥 Função para carregar os dados da planilha
+@st.cache_data
 def carregar_dados():
     response = requests.get(url)
     response.encoding = 'utf-8'
@@ -18,15 +19,14 @@ def carregar_dados():
     df.columns = df.columns.str.replace('\ufeff', '')  # Remove BOM invisível
     return df
 
+df = carregar_dados()
+
 # 🧭 Interface do app
 st.title("🔍 Consulta de Operadores")
 
 numero = st.text_input("Digite o número pessoal (N.P.):")
 
 if numero:
-    st.cache_data.clear()  # 🔄 Limpa o cache ao buscar
-    df = carregar_dados()  # 🔁 Recarrega os dados atualizados
-
     try:
         numero_int = int(numero)
         resultado = df[df["N.P."] == numero_int]
