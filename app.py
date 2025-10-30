@@ -14,10 +14,13 @@ def carregar_dados():
     csv_data = StringIO(response.text)
     df = pd.read_csv(csv_data)
     df.columns = df.columns.str.strip()
-    df.columns = df.columns.str.replace('\ufeff', '')  # Remove BOM invisível
+    df.columns = df.columns.str.replace('\ufeff', '')  # remove BOM invisível
     return df
 
 df = carregar_dados()
+
+st.write("🔍 Colunas detectadas:")
+st.write(df.columns.tolist())
 
 st.title("🔍 Consulta de Operadores")
 
