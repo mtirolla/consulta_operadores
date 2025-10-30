@@ -1,16 +1,14 @@
 import streamlit as st
 import pandas as pd
 
-# ID da sua planilha
 SHEET_ID = "1M6QdiL5_yxzaFyg37cPcq71oH8p1i2dponkqtbyoCgg"
-SHEET_NAME = "Página1"  # Altere se o nome da aba for diferente
+SHEET_NAME = "Página1"
 
-# URL para exportar os dados como CSV
-url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}"
+url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&sheet={SHEET_NAME}"
 
 @st.cache_data
 def carregar_dados():
-    return pd.read_csv(url)
+    return pd.read_csv(url, encoding="utf-8")
 
 df = carregar_dados()
 
@@ -25,3 +23,4 @@ if numero:
         st.dataframe(resultado)
     else:
         st.warning("Nenhum operador encontrado com esse número.")
+
