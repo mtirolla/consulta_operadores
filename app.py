@@ -1,22 +1,23 @@
 import streamlit as st
 import pandas as pd
-import gspread
+import requests
+from io import StringIO
 
-# Conecta ao Google Sheets sem autenticação privada
-gc = gspread.public()
-
-# Abre a planilha pelo ID
+# ID da planilha e nome da aba
 SHEET_ID = "1M6QdiL5_yxzaFyg37cPcq71oH8p1i2dponkqtbyoCgg"
-sh = gc.open_by_key(SHEET_ID)
+SHEET_NAME = "Página1"
 
-# Nome da aba
-worksheet = sh.worksheet("Página1")
+# URL de exportação como CSV
+url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&sheet={SHEET_NAME}"
 
-# Pega os dados como lista de listas
-data = worksheet.get_all_values()
+@st.cache_data
+def carregar_dados():
+    response = requests.get(url)
+    response.encoding = 'utf-8'
+    csv_data = StringIO(response.text)
+    return pd.read_csv(csv_data)
 
-# Converte para DataFrame
-df = pd.DataFrame(data[1:], columns=data[0])
+df = carregar_dados()
 
 st.title("🔍 Consulta de Operadores")
 
