@@ -33,9 +33,15 @@ if numero:
         if not resultado.empty:
             st.success("Operador encontrado:")
             for _, row in resultado.iterrows():
+                nome_completo = str(row['Nome']).strip()
+                partes = nome_completo.split()
+                primeiro_nome = partes[0]
+                sobrenomes_censurados = ' '.join(['*******'] * (len(partes) - 1))
+                nome_censurado = f"{primeiro_nome} {sobrenomes_censurados}" if sobrenomes_censurados else primeiro_nome
+
                 st.markdown(f"""
                 **🆔 N.P.:** {row['N.P.']}  
-                **👤 Nome:** {row['Nome']}  
+                **👤 Nome:** {nome_censurado}  
                 **📅 Data de admissão:** {row['Data de admissão']}  
                 **🛠️ Máquinas autorizadas:** {row['Máquinas autorizadas']}  
                 **👥 Subgrupo de empregados:** {row['Subgrupo de empregados']}
